@@ -136,8 +136,16 @@ defmodule Tap do
     end
   end
 
+
+  @doc ~S"""
+  
+  ## Examples
+
+      iex> Tap.format({{1,2,3.0},:somepid},"x")
+      "1:2:3.000000 :somepid x\n\n"
+  """
   def format({{hour, min, sec}, pid}, message) do
-    "#{hour}:#{min}:#{Float.to_string(sec, decimals: 6)} #{inspect pid} #{message}\n\n"
+    "#{hour}:#{min}:#{:erlang.float_to_binary(sec, decimals: 6)} #{inspect pid} #{message}\n\n"
   end
 
   defp expand(specs), do: for(s <- specs, do: spec(s))
